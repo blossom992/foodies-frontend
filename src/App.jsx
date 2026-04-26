@@ -1,122 +1,98 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useEffect, useState } from "react";
+import Hero from "./components/Hero";
+import Navbar from "./components/Navbar";
+import RestaurantCard from "./components/RestaurantCard";
+import restaurantImage from "./assets/restaurant.png";
+import heroFrame from "./assets/hero.png";
+
+const cuisineHighlights = ["Fast delivery", "Fresh bowls", "Weekend treats"];
+
+const featureCards = [
+  {
+    title: "Restaurants",
+    text: "Step into restaurants that go beyond food, offering rich flavors, inviting spaces, and moments you'll want to come back for again and again.",
+    eyebrow: "Curated picks",
+    image: restaurantImage,
+    accent: "olive",
+  },
+  {
+    title: "Chef Specials",
+    text: "Taste handpicked signature meals, seasonal plates, and comforting favorites designed to brighten lunch breaks and dinner plans.",
+    eyebrow: "Trending today",
+    image: restaurantImage,
+    accent: "cream",
+  },
+];
+
+const quickFilters = ["Near me", "Healthy", "Budget-friendly", "Late night"];
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeFilter, setActiveFilter] = useState(quickFilters[0]);
+  const [highlightIndex, setHighlightIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setHighlightIndex((current) => (current + 1) % cuisineHighlights.length);
+    }, 2600);
+
+    return () => window.clearInterval(timer);
+  }, []);
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
+    <div className="page-shell">
+      <div className="page-glow page-glow-left" />
+      <div className="page-glow page-glow-right" />
+
+      <main className="app-frame">
+        <Navbar
+          isMenuOpen={isMenuOpen}
+          onToggleMenu={() => setIsMenuOpen((open) => !open)}
+        />
+
+        <Hero
+          highlight={cuisineHighlights[highlightIndex]}
+          filters={quickFilters}
+          activeFilter={activeFilter}
+          onFilterChange={setActiveFilter}
+          heroFrame={heroFrame}
+        />
+
+        <section className="section-heading">
+          <div>
+            <p className="section-label">Why Foodies</p>
+            <h2>Built to feel fresh on every screen</h2>
+          </div>
           <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+            The layout keeps the mobile-first card style from your mockup, then
+            opens into a richer desktop experience with more spacing, depth, and
+            movement.
           </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+        </section>
 
-      <div className="ticks"></div>
+        <section className="cards-grid" aria-label="Food discovery sections">
+          {featureCards.map((card, index) => (
+            <RestaurantCard key={card.title} {...card} index={index} />
+          ))}
+        </section>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        <section className="metrics-panel" aria-label="Service highlights">
+          <article>
+            <strong>12 min</strong>
+            <span>Average delivery to nearby zones</span>
+          </article>
+          <article>
+            <strong>50+</strong>
+            <span>Partner kitchens and neighborhood spots</span>
+          </article>
+          <article>
+            <strong>4.9/5</strong>
+            <span>Loved for speed, taste, and reliable service</span>
+          </article>
+        </section>
+      </main>
+    </div>
+  );
 }
 
-export default App
+export default App;
