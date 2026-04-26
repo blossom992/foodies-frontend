@@ -16,8 +16,7 @@ function Hero({ highlight, filters, activeFilter, onFilterChange, heroFrame }) {
         </h1>
 
         <p>
-          Delicious meals, delivered to you with a warmer, faster, more playful
-          experience across mobile and desktop.
+          Delicious meals, delivered to you in minutes. Explore your city&apos;s best restaurants. 
         </p>
 
         <SearchBar />

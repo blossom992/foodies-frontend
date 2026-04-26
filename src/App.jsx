@@ -61,12 +61,10 @@ function App() {
         <section className="section-heading">
           <div>
             <p className="section-label">Why Foodies</p>
-            <h2>Built to feel fresh on every screen</h2>
+            <h2>Experience the joy of food discovery</h2>
           </div>
           <p>
-            The layout keeps the mobile-first card style from your mockup, then
-            opens into a richer desktop experience with more spacing, depth, and
-            movement.
+            Foodies is more than just a delivery service — it&apos;s your gateway to the best meals and stories from your city. 
           </p>
         </section>
 
